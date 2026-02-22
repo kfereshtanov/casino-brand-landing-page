@@ -41,6 +41,12 @@ export default function Wheel() {
 		"#1a1a2e",
 	];
 
+	const onCloseHandler = () => {
+		localStorage.removeItem("wheel-result");
+		setResult(null);
+		setHasPlayed(false);
+	};
+
 	const spin = useCallback(() => {
 		if (spinning || hasPlayed) return;
 
@@ -63,7 +69,7 @@ export default function Wheel() {
 				setTimeout(() => {
 					setResult(null);
 					spin();
-				}, 600);
+				}, 50);
 			} else {
 				localStorage.setItem("wheel-result", winner);
 				setResult(winner);
@@ -115,14 +121,7 @@ export default function Wheel() {
 				/>
 			</button>
 
-			<ResultPopup
-				result={result}
-				onClose={() => {
-					localStorage.removeItem("wheel-result");
-					setResult(null);
-					setHasPlayed(false);
-				}}
-			/>
+			<ResultPopup result={result} onClose={onCloseHandler} />
 		</div>
 	);
 }
